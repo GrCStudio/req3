@@ -12,16 +12,19 @@ def getdata():
 
 
 def get_python_news():
-    url = 'http://api.stackexchange.com/docs/articles'
-    params = {"order": "desc", "sort": "activity", "tagged": "Python", "filter": "default", "site": "stackoverflow"}
+    url = 'https://api.stackexchange.com/2.3/questions'
+    params = {"order": "desc", "sort": "activity", "tagged": "python", "filter": "default", "site": "stackoverflow"}
     params.update(getdata())
     response = requests.get(url, params=params)
     print(response.url)
-    pprint(response.text)
-    pprint(response.json())
+    data_json = response.json()
+    my_list = []
+    for i in range(len(data_json['items'])):
+        my_list.append( data_json['items'][i]['title'])
+    return(my_list)
 
 
-get_python_news()
+pprint(get_python_news())
 
 #https://api.stackexchange.com/docs/articles#
 # fromdate=2021-07-05&todate=2021-07-07
